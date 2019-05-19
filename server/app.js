@@ -40,11 +40,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 //Przypisanie zmiennych do url
-app.use('/', indexRouter);
-app.use('/user', usersRouter);
-app.use('/admin', adminRouter);
-app.use('/ticket', ticketRouter);
-app.use('/line', lineRouter);
+app.use('/api', indexRouter);
+app.use('/api/user', usersRouter);
+app.use('/api/admin', adminRouter);
+app.use('/api/ticket', ticketRouter);
+app.use('/api/line', lineRouter);
 
 
 

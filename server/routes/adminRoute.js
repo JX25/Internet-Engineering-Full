@@ -6,6 +6,8 @@ const ifAdmin = require('../middleware/if_admin');
 const userController = require('../controllers/userController');
 const adminController = require('../controllers/adminController');
 
+//test
+router.get('/test', adminController.test);
 // info o wszystkich uzytkownikach
 router.get('/all', ifAdmin, userController.getUsers);
 // usuwanie wszystkich uzytkownikow
