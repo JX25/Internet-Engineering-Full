@@ -1,15 +1,15 @@
 <template>
   <footer>
-    <div v-if="type === 'admin'" class="fixed-bottom">
-      <p> {{ footer }}</p>
+    <div v-if="type === 'admin'" class="fixed-bottom bg-danger">
+      <p> {{ this.footer1 }} <br/> {{ this.footer2 }} </p>
     </div>
 
-    <div v-else-if="type === 'user'" class="fixed-bottom">
-      <p> {{ footer }}</p>
+    <div v-else-if="type === 'user'" class="fixed-bottom bg-dark">
+      <p> {{ this.footer1 }} <br/> {{ this.footer2 }} </p>
     </div>
 
-    <div v-else class="fixed-bottom">
-      <p> {{ footer }}</p>
+    <div v-else class="fixed-bottom bg-light">
+      <p class="text-dark"> {{ this.footer1 }} <br/> {{ this.footer2 }} </p>
     </div>
   </footer>
 </template>
@@ -17,21 +17,27 @@
 <script>
 export default {
   name: 'Footer',
-  footer: 'Projekt bilety autobusowe online </br> MEVN: MongoDB, Express.js, VueJS, Node.js',
   data: function () {
     return {
-      type: 'admin'
+      type: 'user',
+      footer1: `Projekt bilety autobusowe online.`,
+      footer2:  `MEVN: MongoDB, Express.js, VueJS, Node.js`
     }
   }
 }
+
 </script>
 
 <style scoped>
   .fixed-bottom{
-    height: 400px;
+    height: 100px;
   }
   p{
+    padding: 20px;
     text-align: center;
     vertical-align: middle;
+    font-family: Tahoma;
+    font-size: 18pt;
+    color: #fff;
   }
 </style>
