@@ -1,10 +1,10 @@
 <template>
   <footer>
-    <div v-if="type === 'admin'" class="fixed-bottom bg-danger">
+    <div v-if="this.type == 'true'" class="fixed-bottom bg-danger">
       <p> {{ this.footer1 }} <br/> {{ this.footer2 }} </p>
     </div>
 
-    <div v-else-if="type === 'user'" class="fixed-bottom bg-dark">
+    <div v-else-if="this.type == 'false'" class="fixed-bottom bg-dark">
       <p> {{ this.footer1 }} <br/> {{ this.footer2 }} </p>
     </div>
 
@@ -19,9 +19,22 @@ export default {
   name: 'Footer',
   data: function () {
     return {
-      type: 'user',
+      type: '',
       footer1: `Projekt bilety autobusowe online.`,
       footer2:  `MEVN: MongoDB, Express.js, VueJS, Node.js`
+    }
+  },
+  mounted(){
+      if(localStorage.getItem('type')){
+        console.log("DDDDDD")
+        this.type = localStorage.getItem('type')
+        console.log((this.type === 'false'))
+      }
+  },
+  watch: {
+    type: function () {
+      console.log("XDXDXsD")
+      this.type = localStorage.getItem('type')
     }
   }
 }

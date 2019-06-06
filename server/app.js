@@ -3,13 +3,14 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 
+var cors = require('cors')
 
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 
 
-let dev_db_url = 'mongodb://user2:ala123456@ds161112.mlab.com:61112/ii_projekt_kz_jw';
+let dev_db_url = 'mongodb://admin:admin123@ds149676.mlab.com:49676/full-ie-projekt';
 //let dev_db_url = 'mongodb://jakub07:jakub07@ds155529.mlab.com:55529/ii_projekt';
 let mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose.connect(mongoDB, {useCreateIndex: true, useNewUrlParser: true});
@@ -26,10 +27,17 @@ const lineRouter = require('./routes/lineRoute');
 const adminRouter = require('./routes/adminRoute');
 
 const app = express();
+app.use(cors());
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+
 
 
 app.use(express.json());
@@ -63,5 +71,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
 
 module.exports = app;

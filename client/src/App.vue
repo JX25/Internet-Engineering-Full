@@ -9,9 +9,10 @@
 <script>
 import TopMenu from './components/TopMenu'
 import Footer from './components/Footer'
+import Register from './components/Register'
 export default {
   name: 'App',
-  components: {Footer, TopMenu}
+  components: {Footer, TopMenu, Register}
 }
 </script>
 

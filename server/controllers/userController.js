@@ -91,7 +91,8 @@ exports.loginUser = function(req, res){
                     );
                     return res.status(200).json({
                         message: "Auth successful",
-                        token: token
+                        token: token,
+                        type: user[0].is_admin
                     });
                 }
                 res.status(401).json({
