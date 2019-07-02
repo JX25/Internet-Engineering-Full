@@ -91,6 +91,25 @@ exports.allUserTickets = function (req, res) {
     });
 };
 
+exports.getUserTickets = function (req, res) {
+    console.log("allUserTickets");
+    let email = req.params.email;
+    console.log(email);
+    //res.send('Test controller is ok!');
+    Ticket.find({owner_email: email})
+        .exec()
+        .then( tickets =>{
+            return res.status(200).send(
+                JSON.stringify(tickets)
+            )
+        })
+        .catch( err =>{
+        return res.status(404).json({
+            message: "No tickets!"
+        })
+    });
+};
+
 
 exports.allTickets = function (req, res) {
     Ticket.find().then((tickets) => {

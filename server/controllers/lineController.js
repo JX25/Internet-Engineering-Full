@@ -13,6 +13,7 @@ exports.createLine = function(req, res, next){
         code: req.body.code,
         city_start:     req.body.start,
         city_destination:   req.body.stop,
+        departures: req.body.departures,
         price:  req.body.price,
         seats:  req.body.seats,
         travel_time:    req.body.time,

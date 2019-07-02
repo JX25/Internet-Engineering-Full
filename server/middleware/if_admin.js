@@ -5,9 +5,11 @@ module.exports = (req, res, next) => {{
     try {
         var token = req.header('Authorization').split(' ');
         const decoded = jwt.verify(token[1], 'secret');
+        console.log('xd',token, decoded)
         User.find({email: decoded['email'], is_admin: true})
             .exec()
             .then( user =>{
+                console.log('2xds', user)
                 if(user.length === 1){
                     req.userData = decoded;
                     console.log(decoded);

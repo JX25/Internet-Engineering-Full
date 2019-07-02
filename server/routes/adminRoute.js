@@ -10,12 +10,13 @@ const adminController = require('../controllers/adminController');
 router.get('/test', adminController.test);
 // info o wszystkich uzytkownikach
 router.get('/all', ifAdmin, userController.getUsers);
+router.get('/admins/all', ifAdmin, userController.getAdmins);
 // usuwanie wszystkich uzytkownikow
 router.delete('/all', ifAdmin, userController.deleteUsers);
 // dodawanie administratora
 router.post('/addadmin', ifAdmin, adminController.addAdmin);
 // wlaczenie / wylaczenie konta
-router.patch('/disableaccount/:userId/:value', ifAdmin, adminController.turnOffOnAccount);
+router.put('/disableaccount/:userId/:value', adminController.turnOffOnAccount);
 
 
 

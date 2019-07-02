@@ -1,10 +1,16 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
-import Register from '../components/Register'
-import Login from '../components/Login'
-import Search from '../components/Search'
-
+import Register from '@/components/User/Register'
+import Login from '@/components/User/Login'
+import TestControllers from '@/components/Admin/TestControllers'
+import AllUsers from '@/components/Admin/AllUsers'
+import AllAdmins from '@/components/Admin/AllAdmins'
+import UserDetails from '@/components/User/UserDetails'
+import EditUser from '@/components/User/EditUser'
+import AddAdministrator from '@/components/Admin/AddAdministrator'
+import NewLine from '@/components/Line/NewLine'
+import AllLines from '@/components/Line/AllLines'
 Vue.use(Router)
 
 export default new Router({
@@ -16,18 +22,53 @@ export default new Router({
     },
     {
       path: '/register',
-      name: 'registration',
+      name: 'Register',
       component: Register
     },
     {
       path: '/login',
-      name: 'login',
+      name: 'Login',
       component: Login
     },
     {
-      path: '/search/line',
-      name: 'searchLine',
-      component: Search
+      path: '/test',
+      name: 'TestControllers',
+      component: TestControllers
+    },
+    {
+      path: '/allUsers',
+      name: 'AllUsers',
+      component: AllUsers
+    },
+    {
+      path: '/allAdmins',
+      name: 'AllAdmins',
+      component: AllAdmins
+    },
+    {
+      path: '/user/details/:id',
+      name: 'UserDetails',
+      component: UserDetails
+    },
+    {
+      path: '/user/details/edit/:id',
+      name: 'EditUser',
+      component: EditUser
+    },
+    {
+      path: '/add/admin',
+      name: 'AddAdministrator',
+      component: AddAdministrator
+    },
+    {
+      path: '/line/new',
+      name: 'NewLine',
+      component: NewLine
+    },
+    {
+      path: '/line/all',
+      name: AllLines,
+      component: AllLines
     }
   ]
 })

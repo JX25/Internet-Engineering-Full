@@ -1,5 +1,5 @@
 const User = require('../models/userModel');
-const {ObjectID} = require('mongodb');
+const { ObjectID } = require('mongodb');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -9,14 +9,14 @@ const email = require('emailjs');
 
 
 exports.test = function (req, res) {
-        res.send('Test controller is ok!');
+    res.send('Test controller is ok!');
 };
 
-exports.createUser = function(req, res){
-    User.find({email: req.body.email})
+exports.createUser = function (req, res) {
+    User.find({ email: req.body.email })
         .exec()
-        .then( user => {
-            if (user.length >= 1){
+        .then(user => {
+            if (user.length >= 1) {
                 return res.status(409).json({
                     message: 'User exist'
                 })
@@ -43,7 +43,7 @@ exports.createUser = function(req, res){
                                     message: 'User created'
                                 })
                             })
-                            .catch( err => {
+                            .catch(err => {
                                 console.log(err);
                                 res.status(500).json({
                                     error: err
@@ -55,7 +55,7 @@ exports.createUser = function(req, res){
         })
 };
 
-exports.loginUser = function(req, res){
+exports.loginUser = function (req, res) {
     User.find({ email: req.body.email })
         .lean()
         .exec()
@@ -109,14 +109,14 @@ exports.loginUser = function(req, res){
 };
 
 exports.getUsers = function (req, res) {
-    User.find({is_admin: false})
+    User.find({ is_admin: false })
         .exec()
-        .then(users =>{
+        .then(users => {
             res.status(200).send(
                 JSON.stringify(users)
             )
         })
-        .catch( err =>{
+        .catch(err => {
             console.log(err);
             res.status(500).json({
                 error: err
@@ -124,22 +124,38 @@ exports.getUsers = function (req, res) {
         })
 };
 
-exports.updateUser = function (req, res){
-    const id = req.userData.userId;
+exports.getAdmins = function (req, res) {
+    User.find({ is_admin: true })
+        .exec()
+        .then(users => {
+            res.status(200).send(
+                JSON.stringify(users)
+            )
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            })
+        })
+};
+
+exports.updateUser = function (req, res) {
+    const id = req.params.id;
     console.log(id);
     const updateOps = {};
-    for( var ops in req.body){
+    for (var ops in req.body) {
         updateOps[ops] = req.body[ops];
     }
     updateOps['modified_date'] = Date.now();
-    User.update({_id: id},{$set: updateOps})
+    User.update({ _id: id }, { $set: updateOps })
         .exec()
-        .then(result =>{
+        .then(result => {
             res.status(200).json({
-                message:'Data update'
+                message: 'Data update'
             })
         })
-        .catch(err =>{
+        .catch(err => {
             console.log(err);
             res.status(500).json({
                 error: err
@@ -147,15 +163,16 @@ exports.updateUser = function (req, res){
         });
 };
 
-exports.deleteUser = function (req, res){
-    User.deleteOne({_id: req.userData.userId})
+exports.deleteUser = function (req, res) {
+    console.log(req.params.id)
+    User.findByIdAndDelete({ _id: req.params.id })
         .exec()
-        .then( result => {
+        .then(result => {
             res.status(200).json({
                 message: result
             });
         })
-        .catch( err =>{
+        .catch(err => {
             console.log(err);
             res.status(500).json({
                 error: err
@@ -163,65 +180,97 @@ exports.deleteUser = function (req, res){
         });
 };
 
-
-    exports.deleteUsers = function (req, res){
-        User.deleteMany({is_admin: false})
-            .exec()
-            .then( result =>{
-                res.status(200).json({
-                    message: result
-                });
-            })
-            .catch( err =>{
-                console.log(err);
-                res.status(500).json({
-                    error: err
-                });
-            });
-    }
-
-
-    exports.resetPassword = function (req, res) {
-        const newPassword = uuid.v4();
-        console.log(newPassword);
-        bcrypt.hash(newPassword, 12, (err, hash) => {
-            if (err) {
-                return res.status(500).json({
-                    error: err
-                })
-            } else {
-                User.updateOne({"email": req.userData.email},{$set: {"password": hash}})
-                    .exec()
-                    .then( result =>{
-                        console.log(hash);
-                        console.log(result);
-                        console.log("pass changed");
-                    })
-                    .catch(err =>{
-                        res.status(500).json({
-                            message: "server problem"
-                        })
-                    })
-            }
-        });
-
-        var server 	= email.server.connect({
-            user:    "igkowalski@fastmail.com",
-            port: 465,
-            password:"gepvpv7b3qxkhddk",
-            host:    "smtp.fastmail.com",
-            ssl:     true
-        });
-
-        server.send({
-            text:    "Your new password: "+newPassword,
-            from:    "you <igkowalski@fastmail.com>",
-            to:      "someone <"+req.userData.email+">",
-            //cc:      "else <else@your-email.com>",
-            subject: "Password reset"
-        }, function(err, message) { console.log(err || message); });
-
+exports.getUser = function (req, res){
+    User.findOne({email: req.params.email})
+    .exec()
+    .then( result =>{
         res.status(200).json({
-            message: "Check your email"
+            user: result
         })
-    };
+    })
+    .catch(err => {
+        console.log(err)
+        res.status(500).json({
+            error: err
+        })
+    })
+}
+
+exports.getUserById = function (req, res){
+    User.findOne({_id: req.params.id})
+    .exec()
+    .then( result =>{
+        res.status(200).json({
+            user: result
+        })
+    })
+    .catch(err => {
+        console.log(err)
+        res.status(500).json({
+            error: err
+        })
+    })
+}
+
+
+exports.deleteUsers = function (req, res) {
+    User.deleteMany({ is_admin: false })
+        .exec()
+        .then(result => {
+            res.status(200).json({
+                message: result
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
+}
+
+
+exports.resetPassword = function (req, res) {
+    const newPassword = '!QAZ2wsx';
+    console.log(newPassword);
+    bcrypt.hash(newPassword, 12, (err, hash) => {
+        if (err) {
+            return res.status(500).json({
+                error: err
+            })
+        } else {
+            User.updateOne({ "email": req.userData.email }, { $set: { "password": hash } })
+                .exec()
+                .then(result => {
+                    console.log(hash);
+                    console.log(result);
+                    console.log("pass changed");
+                })
+                .catch(err => {
+                    res.status(500).json({
+                        message: "server problem"
+                    })
+                })
+        }
+    });
+
+    var server = email.server.connect({
+        user: "igkowalski@fastmail.com",
+        port: 465,
+        password: "gepvpv7b3qxkhddk",
+        host: "smtp.fastmail.com",
+        ssl: true
+    });
+
+    server.send({
+        text: "Your new password: " + newPassword,
+        from: "you <igkowalski@fastmail.com>",
+        to: "someone <" + req.userData.email + ">",
+        //cc:      "else <else@your-email.com>",
+        subject: "Password reset"
+    }, function (err, message) { console.log(err || message); });
+
+    res.status(200).json({
+        message: "Check your email"
+    })
+};

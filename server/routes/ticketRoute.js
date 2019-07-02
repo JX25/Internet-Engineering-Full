@@ -26,6 +26,8 @@ router.get('/success/:serial_number', ticketController.ticket_payment_success);
 // porażka zapłaty
 router.get('/failure/:serial_number', ticketController.ticket_payment_failure);
 
+router.get('/tickets/:email', checkAuth, ticketController.getUserTickets)
+
 
 
 module.exports = router;

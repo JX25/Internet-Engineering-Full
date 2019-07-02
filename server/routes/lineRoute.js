@@ -9,11 +9,11 @@ const lineController = require('../controllers/lineController');
 router.get('/test', lineController.test);
 
 // dodanie linii
-router.post('/addline', adminAuth, lineController.createLine);
+router.post('/addline', checkAuth, lineController.createLine);
 // modyfikacja linii
 router.patch('/update/:lineId', adminAuth, lineController.updateLine);
 // usuniecie linii
-router.delete('/remove/:lineId', adminAuth, lineController.deleteLine);
+router.delete('/remove/:lineId',  lineController.deleteLine);
 // wyswietlenie linii
 router.get('/show/:lineId', lineController.showLine);
 //wyswietlenie wszystkich linii

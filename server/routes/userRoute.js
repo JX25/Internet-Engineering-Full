@@ -10,11 +10,14 @@ router.post('/register', userController.createUser);
 // logowanie uzytkownika
 router.post("/login", userController.loginUser);
 // aktualizacja danych uzytkownika
-router.patch('/updateAccount', checkAuth, userController.updateUser);
+router.patch('/updateAccount/:id', checkAuth, userController.updateUser);
 // usuwanie konta uzytkownika
-router.delete('/deleteAccount', checkAuth, userController.deleteUser);
+router.delete('/deleteAccount/:id', checkAuth, userController.deleteUser);
 // reset hasla uzytkownika
-router.patch('/resetPass', checkAuth, userController.resetPassword);
+router.patch('/resetPass/:id', checkAuth, userController.resetPassword);
+//
+router.get('/get/email/:email', userController.getUser)
+router.get('/get/id/:id', userController.getUserById)
 
 
 
