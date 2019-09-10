@@ -9,10 +9,10 @@
             <b-nav-item text="Testuj kontrolery" type="dark" variant="dark"><router-link to="test"><i>Test Kontrolerów</i></router-link></b-nav-item>
             <b-nav-item right disabled><b style="color:#fff;">ZARZĄDZAJ:</b></b-nav-item>
 
-            <b-nav-item-dropdown text="BILETAMI" type="dark" variant="dark">
+     <!--       <b-nav-item-dropdown text="BILETAMI" type="dark" variant="dark">
               <b-dropdown-item href="#">Wszystkie bilety</b-dropdown-item>
               <b-dropdown-item href="#">Usuń wszystkie bilety</b-dropdown-item>
-            </b-nav-item-dropdown>
+            </b-nav-item-dropdown> -->
             <b-nav-item-dropdown text="LINIAMI" type="dark" variant="dark">
               <b-dropdown-item href="#"><router-link to="/line/new/">Nowa linia</router-link></b-dropdown-item>
             <!--  <b-dropdown-item href="#"><router-link to="/search/line">Znajdź linię autobusową</router-link></b-dropdown-item>-->
@@ -38,9 +38,9 @@
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav>
-            <b-nav-item href="#"><router-link to="/ticket/buy">Kup bilet</router-link></b-nav-item>
+            <b-nav-item href="#"><router-link to="/ticket/buy"><i>Kup bilet</i></router-link></b-nav-item>
             <!--<<b-nav-item href="#"><router-link to="/search/line">Znajdź linię autobusową</router-link></b-nav-item>-->
-            <b-nav-item href="#"><router-link to="/mytickets/">Moje bilety</router-link></b-nav-item>
+            <b-nav-item href="#"><router-link to="/mytickets/"><i>Moje bilety</i></router-link></b-nav-item>
             <b-nav-item-dropdown text="Moje konto" type="dark" variant="dark">
               <b-dropdown-item href="#"><router-link to="/edit/mydata/">Edycja danych</router-link></b-dropdown-item>
               <b-dropdown-item href="#"><router-link to="/reset/password/">Resetuj hasło</router-link></b-dropdown-item>
@@ -79,7 +79,7 @@ export default {
   },
   methods: {
     logout: function () {
-      console.log('LOGOUT')
+      //console.log('LOGOUT')
       localStorage.removeItem('type')
       localStorage.removeItem('token')
       this.type = '999'
@@ -92,7 +92,7 @@ export default {
   },
   watch: {
     type : function () {
-      console.log('top')
+      //console.log('top')
       this.type = parseInt(localStorage.type) || 999
     }
   }

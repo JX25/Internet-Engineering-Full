@@ -1,60 +1,37 @@
 <template>
   <div>
-    <table class="table table-striped">
-      <tbody>
-        <tr>
-          <th>First Name</th>
-          <td>{{ model.user.name }}</td>
-        </tr>
-        <tr>
-          <th>Last Name</th>
-          <td>{{ model.user.surname }}</td>
-        </tr>
-        <tr>
-          <th>Email</th>
-          <td>{{ model.user.email }}</td>
-        </tr>
-        <tr>
-          <th>Phone number</th>
-          <td>{{ model.user.phone_number }}</td>
-        </tr>
-        <tr>
-          <th>Account created</th>
-          <td>{{ model.user.created_date }}</td>
-        </tr>
-        <tr>
-          <th>Active</th>
-          <td><p v-if="model.user.active">+++</p><p v-else>---</p></td>
-        </tr>
-      </tbody>
-    </table>
+    <h1>Resetowanie hasła dla konta: {{this.email}}</h1>
+    <div v-if="result">Twoje hasło zostało zresetowane wyloguj się i zaloguj z użyciem nowego hasła.</div>
   </div>
 </template>
 <script>
+import jwt_decode from 'jwt-decode'
 import userService from "../Services/userService";
 
 export default {
   name: "ResetPassword",
   data() {
     return {
-      id: this.$route.params.id,
-      model: {}
+      email: "",
+      response: "",
+      result: ""
     };
   },
   methods: {
-    loadUser: function() {
-      userService.findById(this.id).then(data => {
+    resetPassword: function(token, id) {
+      userService.resetPass(token, id).then(data => {
         this.model = data;
       });
     },
-    getTickets : function(email){
-        ticketService.allUserTicketsByEmail(email).then
-    }
   },
   created() {
-    this.loadUser();
-    this.getTickets();
-    console.log(this.user);
+    let decoded = jwt_decode(localStorage.token)
+    this.email = decoded.email
+    console.log(decoded)
+    if(confirm("Czy chcesz zresetować swoje hasło?")){
+        console.log(localStorage.token, decoded.userId)
+        this.resetPassword(localStorage.token, decoded.userId)
+    }
   }
 };
 </script>

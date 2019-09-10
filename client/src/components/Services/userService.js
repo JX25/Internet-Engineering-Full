@@ -10,7 +10,7 @@ const userService = {
     byId: api + '/get/id/', //:id
     updateUser : api + '/updateAccount/', //:id
     deleteUser : api + '/deleteAccount',
-    resetPassword : api + '/resetPass',
+    resetPassword : api + '/resetPass/', //:id
 
     testController : async function() {
         let result = await Vue.http.get(this.test)
@@ -34,6 +34,17 @@ const userService = {
             return result
     },
 
+    findByEmail : async function(email) {
+        let result = await Vue.http.get(this.byEmail + email)
+            .then(response => response.json(), error => error.json())
+            .then(data => {
+                console.log(data)
+                let value = data
+                return value
+            })
+            return result
+    },
+
     updateUserData : async function(token, user) {
         console.log('cc', user._id)
         console.log(user)
@@ -42,6 +53,18 @@ const userService = {
             .then(response => response.json(), error => error.json())
             .then(data => {
                 console.log('dd', data)
+                let value = data
+                return value
+            })
+            return result
+    },
+
+    resetPass : async function(token, id) {
+        console.log("T", token, "ID", id)
+        let result = await Vue.http.patch(this.resetPassword + id, {}, {headers: {'Authorization': 'Bearer ' + token},
+        'Content-type': 'application/json'})
+            .then(response => response.json(), error => error.json())
+            .then(data => {
                 let value = data
                 return value
             })

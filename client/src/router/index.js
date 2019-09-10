@@ -11,6 +11,11 @@ import EditUser from '@/components/User/EditUser'
 import AddAdministrator from '@/components/Admin/AddAdministrator'
 import NewLine from '@/components/Line/NewLine'
 import AllLines from '@/components/Line/AllLines'
+import UserEditAccount from '@/components/User/UserEditAccount'
+import ResetPassword from '@/components/User/ResetPassword'
+import RemoveAccount from '@/components/User/RemoveAccount'
+import MyTickets from '@/components/Ticket/MyTickets'
+import BuyTicket from '@/components/Ticket/BuyTicket'
 Vue.use(Router)
 
 export default new Router({
@@ -67,8 +72,34 @@ export default new Router({
     },
     {
       path: '/line/all',
-      name: AllLines,
+      name: 'AllLines',
       component: AllLines
-    }
+    },
+    {
+      path: '/edit/mydata',
+      name: 'UserEditAccount',
+      component: UserEditAccount
+    },
+    {
+      path: '/reset/password/',
+      name: 'ResetPassword',
+      component: ResetPassword    
+    },
+    {
+      path: '/remove/account',
+      name: 'RemoveAccount',
+      component: RemoveAccount
+    },
+    {
+      path: '/ticket/buy',
+      name: 'ButTicket',
+      component: BuyTicket    
+    },
+    {
+      path: '/mytickets/',
+      name: 'MyTickets',
+      component: MyTickets    
+    },
+
   ]
 })

@@ -51,7 +51,7 @@
     <hr>
     <h3>Bilety danego użytkownika</h3>
     <div v-if="userTickets.length>0">
-      <table>
+      <table class="table table-striped">
         <thead>
             <tr>
                 <th>ID</th>

@@ -1,34 +1,5 @@
 <template>
-  <div>
-    <table class="table table-striped">
-      <tbody>
-        <tr>
-          <th>First Name</th>
-          <td>{{ model.user.name }}</td>
-        </tr>
-        <tr>
-          <th>Last Name</th>
-          <td>{{ model.user.surname }}</td>
-        </tr>
-        <tr>
-          <th>Email</th>
-          <td>{{ model.user.email }}</td>
-        </tr>
-        <tr>
-          <th>Phone number</th>
-          <td>{{ model.user.phone_number }}</td>
-        </tr>
-        <tr>
-          <th>Account created</th>
-          <td>{{ model.user.created_date }}</td>
-        </tr>
-        <tr>
-          <th>Active</th>
-          <td><p v-if="model.user.active">+++</p><p v-else>---</p></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+<h1>RemAcc</h1>
 </template>
 <script>
 import userService from "../Services/userService";
